@@ -1,0 +1,21 @@
+$dark-green: #172a2e;
+$yellow: #e8b92e;
+$dark-blue: #0D47A1;
+$blue: #1565C0;
+$light-blue: #42A5F5;
+$white-blue: #90CAF9;
+
+$big-font: 1.3rem;
+$large-font: 1.5rem;
+$giant-font: 2rem;
+$small-font: .7em;
+
+%font-set {
+  font-family: 'Bubbler One', sans-serif;
+  letter-spacing: 2px;
+}
+
+%degree-style {
+  padding: 5px 10px;
+  border: 1px solid $dark-green;
+}

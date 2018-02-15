@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Weather app</title>
+  <link rel="stylesheet" type="text/css" href="scss/main.css">
+  <link href="https://fonts.googleapis.com/css?family=Bubbler+One" rel="stylesheet">
+</head>
+<body>
+
+  <header>
+    <div class="nav-wrapper">
+      <div class="dropdown">
+        <button type="button">History &#x25BE;</button>
+        <div class="dropdown-content history-list">
+        </div>
+      </div>
+      <div class="dropdown">
+        <button type="button" class="favorities">Favorities &#x25BE;</button>
+        <div class="dropdown-content favorities-list">
+        </div>
+      </div>
+
+      <button type="button" class="cel active">C&deg;</button>
+      <button type="button" class="far">F&deg;</button>
+    </div>
+
+    <div class="search-wrapper">
+      <input type="text" id="city-search" placeholder="Name of the city...">
+      <button type="button" id="searchButton">Search</button>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="weather-today">
+
+    </section>
+
+    <div class="weather-forecast">
+
+    </div>
+
+  </main>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A&libraries=places,geometry"></script>
+  <script src="js/vendor/skycons.js"></script>
+  <script src="js/bundle.js"></script>
+</body>
+</html>

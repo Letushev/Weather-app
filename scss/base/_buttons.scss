@@ -1,0 +1,9 @@
+button {
+  @extend %font-set;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+}

@@ -1,0 +1,128 @@
+main {
+  height: calc(100vh - 100px);
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  color: #fff;
+}
+
+.weather-today {
+  padding: 15px 25px;
+  background: $dark-green;
+  position: relative;
+
+  h1 {
+    color: $yellow;
+    font-weight: bold;
+    margin: 20px 0;
+    font-size: $giant-font;
+
+    .city-country {
+      color: #fff;
+      font-weight: normal;
+      font-size: $small-font;
+      margin-left: 10px;
+    }
+  }
+
+  .today-main-values {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .mainTemp {
+      font-size: 5rem;
+      line-height: normal;
+    }
+  }
+
+  .description {
+    color: $white-blue;
+    margin: 15px 0 20px 0;
+    font-size: $big-font;
+  }
+}
+
+.star {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  color: #fff;
+  font-size: $giant-font;
+
+  &:hover, &:active, &:focus {
+    color: $yellow;
+    transform: translateY(1px);
+  }
+}
+
+table {
+  width: 100%;
+  padding-top: 15px;
+  border-top: 1px solid #fff;
+  border-collapse: separate;
+  border-spacing: 0 5px;
+
+  th {
+    text-align: left;
+  }
+
+  tr > * {
+    width: 25%;
+    vertical-align: top;
+  }
+
+  td {
+    text-align: center;
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+.wind-dir {
+  display: inline-block;
+}
+
+.weather-forecast {
+  display: grid;
+  grid-gap: 25px;
+  grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+  align-content: start;
+  padding: 50px 25px 25px 25px;
+  overflow: auto;
+  background: linear-gradient(to left, $dark-blue, $light-blue);
+
+  .day-forecast {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #fff;
+    box-shadow: 5px 5px 20px $dark-blue;
+    text-align: center;
+
+    h2 {
+      font-size: $large-font;
+      font-weight: bold;
+    }
+
+    p {
+      font-size: $big-font;
+      margin: 15px 0 20px 0;
+    }
+
+    .main-values {
+      margin-top: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      ul {
+        margin-left: 15px;
+      }
+
+      ul li:first-child {
+        font-size: $big-font;
+      }
+    }
+  }
+}
