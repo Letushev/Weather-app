@@ -1,8 +1,8 @@
 module.exports = (env = {}) => {
   return {
-    entry: ['./js/app.js', './scss/main.scss'],
+    entry: ['./js/components/App.js', './scss/main.scss'],
     output: {
-      filename: 'js/bundle.js',
+      filename: 'js/index.js',
     },
     module: {
       rules: [
@@ -12,7 +12,7 @@ module.exports = (env = {}) => {
             {
               loader: 'file-loader',
               options: {
-                name: 'main.css',
+                name: 'styles.css',
                 outputPath: 'scss/'
               }
             },

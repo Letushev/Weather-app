@@ -1,0 +1,60 @@
+.dropdown {
+  position: relative;
+  display: flex;
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 30px;
+    z-index: 1;
+
+    min-width: 200px;
+    max-height: 400px;
+    overflow: auto;
+
+    background: #fff;
+    box-shadow: 0 5px 15px $dark-green;
+
+    @extend %extra-font-set;
+
+    .dropdown-city {
+      width: 100%;
+      padding: 5px 10px;
+      text-align: left;
+      position: relative;
+
+      &:hover {
+        color: #fff;
+        background: $yellow;
+      }
+    }
+
+    .clear-history-button {
+      width: 100%;
+      padding: 5px 10px;
+      background: $red;
+      color: #fff;
+
+      &:hover {
+        background: $dark-red;
+      }
+    }
+
+    .unstar-button {
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      color: $red;
+      font-size: 1.5rem;
+
+      &:hover {
+        color: $dark-red;
+      }
+    }
+  }
+
+  &:hover .dropdown-content,
+  &:focus .dropdown-content {
+    display: block;
+  }
+}

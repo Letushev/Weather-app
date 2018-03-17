@@ -1,0 +1,221 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body, button {
+  font-family: 'Bubbler One', sans-serif;
+  letter-spacing: 2px; }
+
+.dropdown .dropdown-content, header .search-wrapper #search-input {
+  font-family: Helvetica;
+  letter-spacing: 2px; }
+
+body {
+  line-height: 1.5rem; }
+
+button {
+  padding: 0;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  cursor: pointer; }
+
+.dropdown {
+  position: relative;
+  display: flex; }
+  .dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 30px;
+    z-index: 1;
+    min-width: 200px;
+    max-height: 400px;
+    overflow: auto;
+    background: #fff;
+    box-shadow: 0 5px 15px #172a2e; }
+    .dropdown .dropdown-content .dropdown-city {
+      width: 100%;
+      padding: 5px 10px;
+      text-align: left;
+      position: relative; }
+      .dropdown .dropdown-content .dropdown-city:hover {
+        color: #fff;
+        background: #e8b92e; }
+    .dropdown .dropdown-content .clear-history-button {
+      width: 100%;
+      padding: 5px 10px;
+      background: #e82e2e;
+      color: #fff; }
+      .dropdown .dropdown-content .clear-history-button:hover {
+        background: #C21111; }
+    .dropdown .dropdown-content .unstar-button {
+      position: absolute;
+      right: 10px;
+      bottom: 0;
+      color: #e82e2e;
+      font-size: 1.5rem; }
+      .dropdown .dropdown-content .unstar-button:hover {
+        color: #C21111; }
+  .dropdown:hover .dropdown-content,
+  .dropdown:focus .dropdown-content {
+    display: block; }
+
+header {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  align-items: center;
+  height: 100px; }
+  header .helpers-wrapper {
+    display: flex;
+    margin: 0 40px; }
+    header .helpers-wrapper button {
+      font-weight: bold; }
+    header .helpers-wrapper .favorites-button {
+      margin-left: 15px;
+      color: #e8b92e; }
+    header .helpers-wrapper .celsius-button, header .helpers-wrapper .fahrenheit-button {
+      padding: 5px 10px;
+      border: 1px solid #172a2e; }
+    header .helpers-wrapper .celsius-button {
+      margin-left: auto;
+      border-right: 0; }
+    header .helpers-wrapper .active {
+      color: #fff;
+      background: #e8b92e; }
+  header .search-wrapper {
+    display: flex;
+    margin: 0 40px; }
+    header .search-wrapper #search-input {
+      flex: 1 1 auto;
+      padding: 10px 15px;
+      color: #172a2e;
+      border: 1px solid #42A5F5; }
+      header .search-wrapper #search-input::placeholder {
+        color: #42A5F5;
+        letter-spacing: 5px; }
+    header .search-wrapper #search-button {
+      width: 100px;
+      padding: 10px 0;
+      margin-left: 15px;
+      color: #fff;
+      background: #1565C0; }
+      header .search-wrapper #search-button:hover {
+        background: #0D47A1; }
+
+main {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  height: calc(100vh - 100px);
+  color: #fff; }
+  main .current-wrapper {
+    position: relative;
+    padding: 25px 40px;
+    background: #172a2e; }
+    main .current-wrapper h1 {
+      margin: 20px 0;
+      color: #e8b92e;
+      font-size: 2rem;
+      font-weight: bold; }
+      main .current-wrapper h1 .country {
+        margin-left: 10px;
+        color: #fff;
+        font-size: .7em;
+        font-weight: normal; }
+    main .current-wrapper .current-main-values {
+      display: flex;
+      align-items: center;
+      justify-content: space-between; }
+      main .current-wrapper .current-main-values .current-temp {
+        font-size: 5rem;
+        line-height: normal; }
+    main .current-wrapper .description {
+      margin: 15px 0 20px 0;
+      color: #90CAF9;
+      font-size: 1.3rem; }
+    main .current-wrapper .star {
+      position: absolute;
+      top: 0;
+      right: 10px;
+      color: #fff;
+      font-size: 2rem; }
+      main .current-wrapper .star.favorite {
+        color: #e8b92e; }
+  main table {
+    width: 100%;
+    padding-top: 15px;
+    border-top: 1px solid #fff;
+    border-collapse: separate;
+    border-spacing: 0 5px; }
+    main table th {
+      text-align: left; }
+    main table td {
+      text-align: right; }
+  main .forecast-wrapper {
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+    align-content: start;
+    padding: 40px;
+    overflow: auto;
+    background: linear-gradient(to left, #0D47A1, #42A5F5); }
+    main .forecast-wrapper .day-forecast {
+      padding: 15px;
+      border: 1px solid #fff;
+      box-shadow: 5px 5px 20px #0D47A1;
+      text-align: center; }
+      main .forecast-wrapper .day-forecast h2 {
+        font-size: 1.5rem;
+        font-weight: bold; }
+      main .forecast-wrapper .day-forecast .description {
+        margin: 15px 0 20px 0;
+        font-size: 1.3rem; }
+      main .forecast-wrapper .day-forecast .day-main-values {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: auto; }
+        main .forecast-wrapper .day-forecast .day-main-values ul {
+          margin-left: 15px; }
+          main .forecast-wrapper .day-forecast .day-main-values ul li:first-child {
+            font-size: 1.3rem; }
+  main .wind-dir {
+    display: inline-block; }

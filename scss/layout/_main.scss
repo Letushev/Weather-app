@@ -1,128 +1,130 @@
 main {
-  height: calc(100vh - 100px);
   display: grid;
   grid-template-columns: 450px 1fr;
+
+  height: calc(100vh - 100px);
+
   color: #fff;
-}
 
-.weather-today {
-  padding: 15px 25px;
-  background: $dark-green;
-  position: relative;
+  .current-wrapper {
+    position: relative;
+    padding: 25px 40px;
 
-  h1 {
-    color: $yellow;
-    font-weight: bold;
-    margin: 20px 0;
-    font-size: $giant-font;
+    background: $dark-green;
 
-    .city-country {
+    h1 {
+      margin: 20px 0;
+
+      color: $yellow;
+      font-size: 2rem;
+      font-weight: bold;
+
+      .country {
+        margin-left: 10px;
+
+        color: #fff;
+        font-size: .7em;
+        font-weight: normal;
+      }
+    }
+
+    .current-main-values {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      .current-temp {
+        font-size: 5rem;
+        line-height: normal;
+      }
+    }
+
+    .description {
+      margin: 15px 0 20px 0;
+
+      color: $white-blue;
+      font-size: 1.3rem;
+    }
+
+    .star {
+      position: absolute;
+      top: 0;
+      right: 10px;
+
       color: #fff;
-      font-weight: normal;
-      font-size: $small-font;
-      margin-left: 10px;
+      font-size: 2rem;
+
+      &.favorite {
+        color: $yellow;
+      }
     }
   }
 
-  .today-main-values {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  table {
+    width: 100%;
+    padding-top: 15px;
 
-    .mainTemp {
-      font-size: 5rem;
-      line-height: normal;
+    border-top: 1px solid #fff;
+    border-collapse: separate;
+    border-spacing: 0 5px;
+
+    th {
+      text-align: left;
     }
-  }
 
-  .description {
-    color: $white-blue;
-    margin: 15px 0 20px 0;
-    font-size: $big-font;
-  }
-}
-
-.star {
-  position: absolute;
-  top: 0;
-  right: 10px;
-  color: #fff;
-  font-size: $giant-font;
-
-  &:hover, &:active, &:focus {
-    color: $yellow;
-    transform: translateY(1px);
-  }
-}
-
-table {
-  width: 100%;
-  padding-top: 15px;
-  border-top: 1px solid #fff;
-  border-collapse: separate;
-  border-spacing: 0 5px;
-
-  th {
-    text-align: left;
-  }
-
-  tr > * {
-    width: 25%;
-    vertical-align: top;
-  }
-
-  td {
-    text-align: center;
-    &:last-child {
+    td {
       text-align: right;
     }
   }
-}
 
-.wind-dir {
-  display: inline-block;
-}
+  .forecast-wrapper {
+    display: grid;
+    grid-gap: 25px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, auto));
+    align-content: start;
 
-.weather-forecast {
-  display: grid;
-  grid-gap: 25px;
-  grid-template-columns: repeat(auto-fill, minmax(180px, auto));
-  align-content: start;
-  padding: 50px 25px 25px 25px;
-  overflow: auto;
-  background: linear-gradient(to left, $dark-blue, $light-blue);
+    padding: 40px;
+    overflow: auto;
 
-  .day-forecast {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    border: 1px solid #fff;
-    box-shadow: 5px 5px 20px $dark-blue;
-    text-align: center;
+    background: linear-gradient(to left, $dark-blue, $light-blue);
 
-    h2 {
-      font-size: $large-font;
-      font-weight: bold;
-    }
+    .day-forecast {
+      padding: 15px;
 
-    p {
-      font-size: $big-font;
-      margin: 15px 0 20px 0;
-    }
+      border: 1px solid #fff;
+      box-shadow: 5px 5px 20px $dark-blue;
 
-    .main-values {
-      margin-top: auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
 
-      ul {
-        margin-left: 15px;
+      h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
       }
 
-      ul li:first-child {
-        font-size: $big-font;
+      .description {
+        margin: 15px 0 20px 0;
+        font-size: 1.3rem;
+      }
+
+      .day-main-values {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        margin-top: auto;
+
+        ul {
+          margin-left: 15px;
+
+          li:first-child {
+            font-size: 1.3rem;
+          }
+        }
       }
     }
+  }
+
+  .wind-dir {
+    display: inline-block;
   }
 }

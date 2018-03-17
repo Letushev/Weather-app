@@ -1,4 +1,4 @@
 body {
-  line-height: $large-font;
-  @extend %font-set;
+  @extend %base-font-set;
+  line-height: 1.5rem;
 }

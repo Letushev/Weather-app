@@ -1,8 +1,9 @@
 @import 'base/reset';
-@import 'base/utilities';
+@import 'base/utils';
 @import 'base/base';
-@import 'base/buttons';
-@import 'base/dropdowns';
+
+@import 'components/buttons';
+@import 'components/dropdowns';
 
 @import 'layout/header';
 @import 'layout/main';

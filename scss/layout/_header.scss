@@ -1,69 +1,69 @@
 header {
-  height: 100px;
   display: grid;
   grid-template-columns: 450px 1fr;
   align-items: center;
 
-  .nav-wrapper {
+  height: 100px;
+
+  .helpers-wrapper {
     display: flex;
-    margin: 0 25px;
+    margin: 0 40px;
 
     button {
       font-weight: bold;
-
-      &:first-child {
-        margin-right: 15px;
-      }
     }
 
-    .cel {
+    .favorites-button {
+      margin-left: 15px;
+      color: $yellow;
+    }
+
+    .celsius-button, .fahrenheit-button {
+      padding: 5px 10px;
+      border: 1px solid $dark-green;
+    }
+
+    .celsius-button {
       margin-left: auto;
-      @extend %degree-style;
+      border-right: 0;
     }
 
     .active {
-      background: $yellow;
       color: #fff;
-    }
-
-    .far {
-      border-left: 0;
-      @extend %degree-style;
-    }
-
-    .favorities {
-      color: $yellow;
+      background: $yellow;
     }
   }
 
   .search-wrapper {
     display: flex;
-    padding: 0 25px;
+    margin: 0 40px;
 
-    button {
+    #search-input {
+      flex: 1 1 auto;
+      padding: 10px 15px;
+
+      color: $dark-green;
+      @extend %extra-font-set;
+
+      border: 1px solid $light-blue;
+
+      &::placeholder {
+        color: $light-blue;
+        letter-spacing: 5px;
+      }
+    }
+
+    #search-button {
       width: 100px;
       padding: 10px 0;
       margin-left: 15px;
-      background: $blue;
+
       color: #fff;
+      background: $blue;
 
       &:hover {
         background: $dark-blue;
       }
     }
-  }
-}
-
-input[type=text] {
-  flex: 1 1 auto;
-  padding: 10px 15px;
-  color: $dark-green;
-  font-family: Helvetica;
-  @extend %font-set;
-  border: 1px solid $light-blue;
-
-  &::placeholder {
-    color: $light-blue;
-    letter-spacing: 5px;
   }
 }

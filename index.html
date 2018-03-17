@@ -2,49 +2,44 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
+
   <title>Weather app</title>
-  <link rel="stylesheet" type="text/css" href="scss/main.css">
+
+  <link rel="stylesheet" type="text/css" href="scss/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Bubbler+One" rel="stylesheet">
 </head>
 <body>
 
   <header>
-    <div class="nav-wrapper">
+    <div class="helpers-wrapper">
       <div class="dropdown">
-        <button type="button">History &#x25BE;</button>
-        <div class="dropdown-content history-list">
-        </div>
-      </div>
-      <div class="dropdown">
-        <button type="button" class="favorities">Favorities &#x25BE;</button>
-        <div class="dropdown-content favorities-list">
-        </div>
+        <button type="button" class="history-button">History &#x25BE;</button>
+        <div class="dropdown-content history-dropdown"></div>
       </div>
 
-      <button type="button" class="cel active">C&deg;</button>
-      <button type="button" class="far">F&deg;</button>
+      <div class="dropdown">
+        <button type="button" class="favorites-button">Favorites &#x25BE;</button>
+        <div class="dropdown-content favorites-dropdown"></div>
+      </div>
+
+      <button type="button" class="celsius-button">C&deg;</button>
+      <button type="button" class="fahrenheit-button">F&deg;</button>
     </div>
 
     <div class="search-wrapper">
-      <input type="text" id="city-search" placeholder="Name of the city...">
-      <button type="button" id="searchButton">Search</button>
+      <input type="text" id="search-input" placeholder="Name of the city...">
+      <button id="search-button">Search</button>
     </div>
   </header>
 
   <main>
-
-    <section class="weather-today">
-
-    </section>
-
-    <div class="weather-forecast">
-
-    </div>
-
+    <div class="current-wrapper"></div>
+    <div class="forecast-wrapper"></div>
   </main>
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A&libraries=places,geometry"></script>
-  <script src="js/vendor/skycons.js"></script>
-  <script src="js/bundle.js"></script>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/skycons/1396634940/skycons.min.js'></script>
+  <script src="js/index.js"></script>
+
 </body>
 </html>
