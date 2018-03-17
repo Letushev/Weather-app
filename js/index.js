@@ -177,7 +177,7 @@ class App {
   updateState(nextState) {
     this.state = Object.assign({}, this.state, nextState);
     this.showWeather();
-    this.storage.update({cityName: this.state.current.cityName});
+    this.storage.update({cityName: this.state.current.city_name});
   }
 
   render(data) {
@@ -238,9 +238,9 @@ class App {
 
   addToHistoryStack() {
     if (history.length === 2 && history.state === null) { // First entry
-      history.replaceState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
+      history.replaceState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
     } else {
-      history.pushState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
+      history.pushState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
     }
   }
 
