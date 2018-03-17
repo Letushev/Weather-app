@@ -39,7 +39,6 @@ export default class App {
   }
 
   init() {
-    console.log('I am here');
     const INITIAL_CITY = 'Kiev';
 
     if (this.state.url_city_name) { // smth present in url ?= -> search it
