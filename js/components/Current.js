@@ -1,4 +1,4 @@
-import { elements } from './../vendor/elements';
+import { elements } from './../utils/elements';
 
 export default class Current {
 

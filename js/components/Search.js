@@ -1,4 +1,4 @@
-import { elements } from './../vendor/elements';
+import { elements } from './../utils/elements';
 
 export default class Search {
 
@@ -50,8 +50,8 @@ export default class Search {
             return response.json();
           }
         })
-        .then(data => this.getLocation(data.results[0]))
-        .catch(() => alert('Wrong city. Please, try again...'));
+        .then(data => this.getLocation(data.results[0]));
+        // .catch(() => alert('Wrong city. Please, try again...'));
     }
   }
 

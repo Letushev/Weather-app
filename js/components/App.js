@@ -3,7 +3,8 @@ import Forecast from './Forecast';
 import Search from './Search';
 import Storage from './Storage';
 import Degree from './Degree';
-import * as utils from './../vendor/utils';
+import * as renders from './../utils/renders';
+import { getWeatherInfo } from './../utils/api';
 
 export default class App {
 
@@ -14,11 +15,6 @@ export default class App {
       degree: 'M',
       urlCityName: new URLSearchParams(location.search).get('city') || '',
     };
-
-    this.request = {
-      API_URL: 'https://api.weatherbit.io/v2.0',
-      API_KEY: '3182fa324b4340ef9cb632451ebb05c1' // e83a8a7ac30d465b93bd8e2bb270bbf7
-    }
 
     this.bindCallbacks();
 
@@ -53,23 +49,10 @@ export default class App {
   }
 
   getWeather(location) {
-    Promise.all([ this.get(`/current?lat=${location.lat}&lon=${location.lng}&units=${this.state.degree}`)
-                    .then(info => info.data[0]),
-                  this.get(`/forecast/daily?lat=${location.lat}&lon=${location.lng}&days=8&units=${this.state.degree}`)
-                    .then(info => info.data) ])
+    getWeatherInfo(location, this.state.degree)
       .then(data => this.render(data))
       .then(() => this.addToHistoryStack())
       .catch(() => alert('Server responded with error. Please, try again later...'));
-  }
-
-  get(query) {
-    const url = `${this.request.API_URL}${query}&key=${this.request.API_KEY}`;
-    return  fetch(url)
-              .then(response => {
-                if (response.ok) {
-                  return response.json();
-                }
-              });
   }
 
   updateState(nextState) {
@@ -82,18 +65,18 @@ export default class App {
     let newCurrent = data[0];
     let newForecast = data[1];
 
-    newCurrent.country = utils.getCountryName(newCurrent.country_code);
+    newCurrent.country = renders.getCountryName(newCurrent.country_code);
     newCurrent.temp = Math.round(newCurrent.temp);
     newCurrent.app_temp = Math.round(newCurrent.app_temp);
-    newCurrent.weather.icon = utils.getSkyconClass(newCurrent.weather.code, newCurrent.weather.icon);
+    newCurrent.weather.icon = renders.getSkyconClass(newCurrent.weather.code, newCurrent.weather.icon);
     newCurrent.pres = Math.round(newCurrent.pres);
 
     newForecast = newForecast.map(day => {
-      day.day = utils.getWeekDay(day.datetime);
-      day.datetime = utils.renderDate(day.datetime);
+      day.day = renders.getWeekDay(day.datetime);
+      day.datetime = renders.renderDate(day.datetime);
       day.max_temp = Math.round(day.max_temp);
       day.min_temp = Math.round(day.min_temp);
-      day.weather.icon = utils.getSkyconClass(day.weather.code, day.weather.icon);
+      day.weather.icon = renders.getSkyconClass(day.weather.code, day.weather.icon);
       return day;
     });
 
@@ -103,7 +86,7 @@ export default class App {
   showWeather() {
     this.current.update({current: this.state.current});
     this.forecast.update({forecast: this.state.forecast});
-    utils.startSkycons();
+    renders.startSkycons();
   }
 
   onSearch(location) {
