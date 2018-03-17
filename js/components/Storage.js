@@ -16,7 +16,7 @@ export default class Storage {
     if (nextProps.favorite) {
       this.makeFavorite(this.props.favorite);
     } else {
-      this.saveToHistory(this.props.city_name);
+      this.saveToHistory(this.props.cityName);
     }
   }
 
@@ -28,32 +28,32 @@ export default class Storage {
     }
   }
 
-  saveToHistory(city_name) {
-    if (!this.isInDropdown(city_name, 'history')) {
-      this.updateState({history: this.state.history.concat(city_name)});
+  saveToHistory(cityName) {
+    if (!this.isInDropdown(cityName, 'history')) {
+      this.updateState({history: this.state.history.concat(cityName)});
     }
-    this.updateState({last: city_name});
+    this.updateState({last: cityName});
   }
 
-  makeFavorite(city_name) {
-    if (!this.isInDropdown(city_name, 'favorites')) {
+  makeFavorite(cityName) {
+    if (!this.isInDropdown(cityName, 'favorites')) {
       const star = document.querySelector('.star');
       star.classList.add('favorite');
       star.setAttribute('disabled', '');
-      this.updateState({favorites: this.state.favorites.concat(city_name)});
+      this.updateState({favorites: this.state.favorites.concat(cityName)});
     }
   }
 
   showDropdowns() {
-    elements.history_dropdown.innerHTML = '';
-    elements.favorites_dropdown.innerHTML = '';
+    elements.historyDropdown.innerHTML = '';
+    elements.favoritesDropdown.innerHTML = '';
 
-    this.state.history.forEach(city_name => {
-      this.addToDropdown(city_name, elements.history_dropdown);
+    this.state.history.forEach(cityName => {
+      this.addToDropdown(cityName, elements.historyDropdown);
     });
 
-    this.state.favorites.forEach(city_name => {
-      this.addToDropdown(city_name, elements.favorites_dropdown);
+    this.state.favorites.forEach(cityName => {
+      this.addToDropdown(cityName, elements.favoritesDropdown);
     })
 
     this.showClearHistoryButton();
@@ -61,43 +61,43 @@ export default class Storage {
 
   showClearHistoryButton() {
     if (this.state.history.length !== 0) {
-      const clear_history_button = document.createElement('button');
-      clear_history_button.textContent = 'Clear history';
-      clear_history_button.className = 'clear-history-button';
+      const clearHistoryButton = document.createElement('button');
+      clearHistoryButton.textContent = 'Clear history';
+      clearHistoryButton.className = 'clear-history-button';
 
-      clear_history_button.addEventListener('click', () => {
+      clearHistoryButton.addEventListener('click', () => {
         this.updateState({history: [this.state.last]});
       });
 
-      elements.history_dropdown.appendChild(clear_history_button);
+      elements.historyDropdown.appendChild(clearHistoryButton);
     }
   }
 
-  addToDropdown(city_name, container) {
-    const dropdown_item = document.createElement('button');
-    dropdown_item.textContent = city_name;
-    dropdown_item.className = 'dropdown-city';
+  addToDropdown(cityName, container) {
+    const dropdownItem = document.createElement('button');
+    dropdownItem.textContent = cityName;
+    dropdownItem.className = 'dropdown-city';
 
-    dropdown_item.addEventListener('click', () => {
-      this.props.onDropdownItemClick(city_name);
+    dropdownItem.addEventListener('click', () => {
+      this.props.onDropdownItemClick(cityName);
     })
 
-    if (container === elements.favorites_dropdown) {
-      this.addUnstarButton(dropdown_item, city_name);
+    if (container === elements.favoritesDropdown) {
+      this.addUnstarButton(dropdownItem, cityName);
     }
 
-    container.appendChild(dropdown_item);
+    container.appendChild(dropdownItem);
   }
 
-  addUnstarButton(container, container_city_name) {
-    const unstar_button = document.createElement('button');
-    unstar_button.textContent = '\u00d7';
-    unstar_button.className = 'unstar-button';
+  addUnstarButton(container, containerCityName) {
+    const unstarButton = document.createElement('button');
+    unstarButton.textContent = '\u00d7';
+    unstarButton.className = 'unstar-button';
 
-    unstar_button.addEventListener('click', e => {
-      this.updateState({favorites: this.state.favorites.filter(city_name => city_name !== container_city_name)});
+    unstarButton.addEventListener('click', e => {
+      this.updateState({favorites: this.state.favorites.filter(cityName => cityName !== containerCityName)});
 
-      if (container_city_name === this.state.last) {
+      if (containerCityName === this.state.last) {
         const star = document.querySelector('.star');
         star.classList.remove('favorite');
         star.removeAttribute('disabled');
@@ -106,11 +106,11 @@ export default class Storage {
       e.stopPropagation();
     })
 
-    container.appendChild(unstar_button);
+    container.appendChild(unstarButton);
   }
 
-  isInDropdown(city_name, dropdown) {
-    return this.state[dropdown].includes(city_name);
+  isInDropdown(cityName, dropdown) {
+    return this.state[dropdown].includes(cityName);
   }
 
 }

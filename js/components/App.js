@@ -12,7 +12,7 @@ export default class App {
       current: null,
       forecast: null,
       degree: 'M',
-      url_city_name: new URLSearchParams(location.search).get('city') || '',
+      urlCityName: new URLSearchParams(location.search).get('city') || '',
     };
 
     this.request = {
@@ -39,15 +39,15 @@ export default class App {
   }
 
   init() {
-    const INITIAL_CITY = 'Kiev';
+    const initialCity = 'Kiev';
 
-    if (this.state.url_city_name) { // smth present in url ?= -> search it
-      this.search.update({city_name: this.state.url_city_name});
+    if (this.state.urlCityName) { // smth present in url ?= -> search it
+      this.search.update({cityName: this.state.urlCityName});
     } else {
       if (this.storage.state.history.length !== 0) { // history is not empty -> search by last
-        this.search.update({city_name: JSON.parse(localStorage.getItem('last'))});
+        this.search.update({cityName: JSON.parse(localStorage.getItem('last'))});
       } else { // history is empty -> search by INITIAL
-        this.search.update({city_name: INITIAL_CITY});
+        this.search.update({cityName: initialCity});
       }
     }
   }
@@ -75,20 +75,20 @@ export default class App {
   updateState(nextState) {
     this.state = Object.assign({}, this.state, nextState);
     this.showWeather();
-    this.storage.update({city_name: this.state.current.city_name});
+    this.storage.update({cityName: this.state.current.cityName});
   }
 
   render(data) {
-    let new_current = data[0];
-    let new_forecast = data[1];
+    let newCurrent = data[0];
+    let newForecast = data[1];
 
-    new_current.country = utils.getCountryName(new_current.country_code);
-    new_current.temp = Math.round(new_current.temp);
-    new_current.app_temp = Math.round(new_current.app_temp);
-    new_current.weather.icon = utils.getSkyconClass(new_current.weather.code, new_current.weather.icon);
-    new_current.pres = Math.round(new_current.pres);
+    newCurrent.country = utils.getCountryName(newCurrent.country_code);
+    newCurrent.temp = Math.round(newCurrent.temp);
+    newCurrent.app_temp = Math.round(newCurrent.app_temp);
+    newCurrent.weather.icon = utils.getSkyconClass(newCurrent.weather.code, newCurrent.weather.icon);
+    newCurrent.pres = Math.round(newCurrent.pres);
 
-    new_forecast = new_forecast.map(day => {
+    newForecast = newForecast.map(day => {
       day.day = utils.getWeekDay(day.datetime);
       day.datetime = utils.renderDate(day.datetime);
       day.max_temp = Math.round(day.max_temp);
@@ -97,7 +97,7 @@ export default class App {
       return day;
     });
 
-    this.updateState({current: new_current, forecast: new_forecast});
+    this.updateState({current: newCurrent, forecast: newForecast});
   }
 
   showWeather() {
@@ -110,12 +110,12 @@ export default class App {
     this.getWeather(location);
   }
 
-  onStar(city_name) {
-    this.storage.update({favorite: city_name});
+  onStar(cityName) {
+    this.storage.update({favorite: cityName});
   }
 
-  onDropdownItemClick(dropdown_city_name) {
-    this.search.update({city_name: dropdown_city_name});
+  onDropdownItemClick(dropdownCityName) {
+    this.search.update({cityName: dropdownCityName});
   }
 
   onDegreeChange(degree, convertor) {
@@ -123,7 +123,7 @@ export default class App {
 
     newState.degree = degree;
     newState.current.temp = convertor(newState.current.temp);
-    newState.current.app_temp = convertor(newState.current.app_temp);
+    newState.current.appTemp = convertor(newState.current.appTemp);
 
     newState.forecast = newState.forecast.map(day => {
       day.max_temp = convertor(day.max_temp);
@@ -136,9 +136,9 @@ export default class App {
 
   addToHistoryStack() {
     if (history.length === 2 && history.state === null) { // First entry
-      history.replaceState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
+      history.replaceState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
     } else {
-      history.pushState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
+      history.pushState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
     }
   }
 

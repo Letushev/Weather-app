@@ -72,17 +72,17 @@
 
 "use strict";
 const elements = {
-  search_input:       document.getElementById('search-input'),
-  search_button:      document.getElementById('search-button'),
+  searchInput:       document.getElementById('search-input'),
+  searchButton:      document.getElementById('search-button'),
 
-  history_dropdown:   document.querySelector('.history-dropdown'),
-  favorites_dropdown: document.querySelector('.favorites-dropdown'),
+  historyDropdown:   document.querySelector('.history-dropdown'),
+  favoritesDropdown: document.querySelector('.favorites-dropdown'),
 
-  celsius_button:     document.querySelector('.celsius-button'),
-  fahrenheit_button:  document.querySelector('.fahrenheit-button'),
+  celsiusButton:     document.querySelector('.celsius-button'),
+  fahrenheitButton:  document.querySelector('.fahrenheit-button'),
 
-  current_wrapper:    document.querySelector('.current-wrapper'),
-  forecast_wrapper:   document.querySelector('.forecast-wrapper')
+  currentWrapper:    document.querySelector('.current-wrapper'),
+  forecastWrapper:   document.querySelector('.forecast-wrapper')
 };
 /* harmony export (immutable) */ exports["a"] = elements;
 
@@ -114,7 +114,7 @@ class App {
       current: null,
       forecast: null,
       degree: 'M',
-      url_city_name: new URLSearchParams(location.search).get('city') || '',
+      urlCityName: new URLSearchParams(location.search).get('city') || '',
     };
 
     this.request = {
@@ -141,15 +141,15 @@ class App {
   }
 
   init() {
-    const INITIAL_CITY = 'Kiev';
+    const initialCity = 'Kiev';
 
-    if (this.state.url_city_name) { // smth present in url ?= -> search it
-      this.search.update({city_name: this.state.url_city_name});
+    if (this.state.urlCityName) { // smth present in url ?= -> search it
+      this.search.update({cityName: this.state.urlCityName});
     } else {
       if (this.storage.state.history.length !== 0) { // history is not empty -> search by last
-        this.search.update({city_name: JSON.parse(localStorage.getItem('last'))});
+        this.search.update({cityName: JSON.parse(localStorage.getItem('last'))});
       } else { // history is empty -> search by INITIAL
-        this.search.update({city_name: INITIAL_CITY});
+        this.search.update({cityName: initialCity});
       }
     }
   }
@@ -177,20 +177,20 @@ class App {
   updateState(nextState) {
     this.state = Object.assign({}, this.state, nextState);
     this.showWeather();
-    this.storage.update({city_name: this.state.current.city_name});
+    this.storage.update({cityName: this.state.current.cityName});
   }
 
   render(data) {
-    let new_current = data[0];
-    let new_forecast = data[1];
+    let newCurrent = data[0];
+    let newForecast = data[1];
 
-    new_current.country = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["a" /* getCountryName */](new_current.country_code);
-    new_current.temp = Math.round(new_current.temp);
-    new_current.app_temp = Math.round(new_current.app_temp);
-    new_current.weather.icon = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["b" /* getSkyconClass */](new_current.weather.code, new_current.weather.icon);
-    new_current.pres = Math.round(new_current.pres);
+    newCurrent.country = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["a" /* getCountryName */](newCurrent.country_code);
+    newCurrent.temp = Math.round(newCurrent.temp);
+    newCurrent.app_temp = Math.round(newCurrent.app_temp);
+    newCurrent.weather.icon = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["b" /* getSkyconClass */](newCurrent.weather.code, newCurrent.weather.icon);
+    newCurrent.pres = Math.round(newCurrent.pres);
 
-    new_forecast = new_forecast.map(day => {
+    newForecast = newForecast.map(day => {
       day.day = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["c" /* getWeekDay */](day.datetime);
       day.datetime = __WEBPACK_IMPORTED_MODULE_5__vendor_utils__["d" /* renderDate */](day.datetime);
       day.max_temp = Math.round(day.max_temp);
@@ -199,7 +199,7 @@ class App {
       return day;
     });
 
-    this.updateState({current: new_current, forecast: new_forecast});
+    this.updateState({current: newCurrent, forecast: newForecast});
   }
 
   showWeather() {
@@ -212,12 +212,12 @@ class App {
     this.getWeather(location);
   }
 
-  onStar(city_name) {
-    this.storage.update({favorite: city_name});
+  onStar(cityName) {
+    this.storage.update({favorite: cityName});
   }
 
-  onDropdownItemClick(dropdown_city_name) {
-    this.search.update({city_name: dropdown_city_name});
+  onDropdownItemClick(dropdownCityName) {
+    this.search.update({cityName: dropdownCityName});
   }
 
   onDegreeChange(degree, convertor) {
@@ -225,7 +225,7 @@ class App {
 
     newState.degree = degree;
     newState.current.temp = convertor(newState.current.temp);
-    newState.current.app_temp = convertor(newState.current.app_temp);
+    newState.current.appTemp = convertor(newState.current.appTemp);
 
     newState.forecast = newState.forecast.map(day => {
       day.max_temp = convertor(day.max_temp);
@@ -238,9 +238,9 @@ class App {
 
   addToHistoryStack() {
     if (history.length === 2 && history.state === null) { // First entry
-      history.replaceState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
+      history.replaceState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
     } else {
-      history.pushState(this.state, this.state.current.city_name, `?city=${this.state.current.city_name}`);
+      history.pushState(this.state, this.state.current.cityName, `?city=${this.state.current.cityName}`);
     }
   }
 
@@ -291,7 +291,7 @@ class Current {
   }
 
   showCurrentWeather() {
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].current_wrapper.innerHTML =
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].currentWrapper.innerHTML =
      `<section>
         <h1>${this.state.current.city_name}<span class="country">${this.state.current.country}</span></h1>
         <div class="current-main-values">
@@ -348,7 +348,7 @@ class Current {
 
     star.addEventListener('click', () => this.props.onStar(this.state.current.city_name));
 
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].current_wrapper.appendChild(star);
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].currentWrapper.appendChild(star);
   }
 
 }
@@ -372,16 +372,16 @@ class Degree {
       degree: 'M'
     }
 
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsius_button.classList.add('active');
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsiusButton.classList.add('active');
 
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsius_button.addEventListener('click', e => {
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsiusButton.addEventListener('click', e => {
       if (!e.target.classList.contains('active')) {
         this.updateState({degree: 'M'});
         this.props.onDegreeChange('M', this.convertToC);
       }
     });
 
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].fahrenheit_button.addEventListener('click', e => {
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].fahrenheitButton.addEventListener('click', e => {
       if (!e.target.classList.contains('active')) {
         this.updateState({degree: 'I'});
         this.props.onDegreeChange('I', this.convertToF);
@@ -400,11 +400,11 @@ class Degree {
   }
 
   changeActiveButton(degree) {
-    const target_button = degree === 'M' ? __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsius_button : __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].fahrenheit_button;
+    const targetButton = degree === 'M' ? __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].celsiusButton : __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].fahrenheitButton;
 
-    if (!target_button.classList.contains('active')) {
-      const sibling = target_button.nextElementSibling || target_button.previousElementSibling;
-      target_button.classList.add('active');
+    if (!targetButton.classList.contains('active')) {
+      const sibling = targetButton.nextElementSibling || targetButton.previousElementSibling;
+      targetButton.classList.add('active');
       sibling.classList.remove('active');
     }
   }
@@ -450,7 +450,7 @@ class Forecast {
   showForecast() {
     let forecast = '';
     this.state.forecast.forEach(dayWeather => forecast += this.addDayWeather(dayWeather));
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].forecast_wrapper.innerHTML = forecast;
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].forecastWrapper.innerHTML = forecast;
   }
 
   addDayWeather(dayWeather) {
@@ -492,19 +492,19 @@ class Search {
       API_URL: 'https://maps.googleapis.com/maps/api/geocode/json',
       API_KEY: 'AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A'
     }
-    this.autocomplete = new google.maps.places.Autocomplete(__WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].search_input, {types: ['(cities)']});
+    this.autocomplete = new google.maps.places.Autocomplete(__WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].searchInput, {types: ['(cities)']});
 
     this.getPlaceFromAutocomplete = this.getPlaceFromAutocomplete.bind(this);
 
     this.autocomplete.addListener('place_changed', this.getPlaceFromAutocomplete);
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].search_button.addEventListener('click', () => {
-      this.findLocationByCityName(__WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].search_input.value.trim());
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].searchButton.addEventListener('click', () => {
+      this.findLocationByCityName(__WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].searchInput.value.trim());
     });
   }
 
   update(nextProps) {
     this.props = Object.assign({}, this.props, nextProps);
-    this.findLocationByCityName(this.props.city_name);
+    this.findLocationByCityName(this.props.cityName);
   }
 
   updateState(nextState) {
@@ -523,9 +523,9 @@ class Search {
     }
   }
 
-  findLocationByCityName(city_name) {
-    if (city_name) {
-      const url = `${this.request.API_URL}?address=${city_name}&key=${this.request.API_KEY}`;
+  findLocationByCityName(cityName) {
+    if (cityName) {
+      const url = `${this.request.API_URL}?address=${cityName}&key=${this.request.API_KEY}`;
 
       fetch(url)
         .then(response => {
@@ -577,7 +577,7 @@ class Storage {
     if (nextProps.favorite) {
       this.makeFavorite(this.props.favorite);
     } else {
-      this.saveToHistory(this.props.city_name);
+      this.saveToHistory(this.props.cityName);
     }
   }
 
@@ -589,32 +589,32 @@ class Storage {
     }
   }
 
-  saveToHistory(city_name) {
-    if (!this.isInDropdown(city_name, 'history')) {
-      this.updateState({history: this.state.history.concat(city_name)});
+  saveToHistory(cityName) {
+    if (!this.isInDropdown(cityName, 'history')) {
+      this.updateState({history: this.state.history.concat(cityName)});
     }
-    this.updateState({last: city_name});
+    this.updateState({last: cityName});
   }
 
-  makeFavorite(city_name) {
-    if (!this.isInDropdown(city_name, 'favorites')) {
+  makeFavorite(cityName) {
+    if (!this.isInDropdown(cityName, 'favorites')) {
       const star = document.querySelector('.star');
       star.classList.add('favorite');
       star.setAttribute('disabled', '');
-      this.updateState({favorites: this.state.favorites.concat(city_name)});
+      this.updateState({favorites: this.state.favorites.concat(cityName)});
     }
   }
 
   showDropdowns() {
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].history_dropdown.innerHTML = '';
-    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favorites_dropdown.innerHTML = '';
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].historyDropdown.innerHTML = '';
+    __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favoritesDropdown.innerHTML = '';
 
-    this.state.history.forEach(city_name => {
-      this.addToDropdown(city_name, __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].history_dropdown);
+    this.state.history.forEach(cityName => {
+      this.addToDropdown(cityName, __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].historyDropdown);
     });
 
-    this.state.favorites.forEach(city_name => {
-      this.addToDropdown(city_name, __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favorites_dropdown);
+    this.state.favorites.forEach(cityName => {
+      this.addToDropdown(cityName, __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favoritesDropdown);
     })
 
     this.showClearHistoryButton();
@@ -622,43 +622,43 @@ class Storage {
 
   showClearHistoryButton() {
     if (this.state.history.length !== 0) {
-      const clear_history_button = document.createElement('button');
-      clear_history_button.textContent = 'Clear history';
-      clear_history_button.className = 'clear-history-button';
+      const clearHistoryButton = document.createElement('button');
+      clearHistoryButton.textContent = 'Clear history';
+      clearHistoryButton.className = 'clear-history-button';
 
-      clear_history_button.addEventListener('click', () => {
+      clearHistoryButton.addEventListener('click', () => {
         this.updateState({history: [this.state.last]});
       });
 
-      __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].history_dropdown.appendChild(clear_history_button);
+      __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].historyDropdown.appendChild(clearHistoryButton);
     }
   }
 
-  addToDropdown(city_name, container) {
-    const dropdown_item = document.createElement('button');
-    dropdown_item.textContent = city_name;
-    dropdown_item.className = 'dropdown-city';
+  addToDropdown(cityName, container) {
+    const dropdownItem = document.createElement('button');
+    dropdownItem.textContent = cityName;
+    dropdownItem.className = 'dropdown-city';
 
-    dropdown_item.addEventListener('click', () => {
-      this.props.onDropdownItemClick(city_name);
+    dropdownItem.addEventListener('click', () => {
+      this.props.onDropdownItemClick(cityName);
     })
 
-    if (container === __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favorites_dropdown) {
-      this.addUnstarButton(dropdown_item, city_name);
+    if (container === __WEBPACK_IMPORTED_MODULE_0__vendor_elements__["a" /* elements */].favoritesDropdown) {
+      this.addUnstarButton(dropdownItem, cityName);
     }
 
-    container.appendChild(dropdown_item);
+    container.appendChild(dropdownItem);
   }
 
-  addUnstarButton(container, container_city_name) {
-    const unstar_button = document.createElement('button');
-    unstar_button.textContent = '\u00d7';
-    unstar_button.className = 'unstar-button';
+  addUnstarButton(container, containerCityName) {
+    const unstarButton = document.createElement('button');
+    unstarButton.textContent = '\u00d7';
+    unstarButton.className = 'unstar-button';
 
-    unstar_button.addEventListener('click', e => {
-      this.updateState({favorites: this.state.favorites.filter(city_name => city_name !== container_city_name)});
+    unstarButton.addEventListener('click', e => {
+      this.updateState({favorites: this.state.favorites.filter(cityName => cityName !== containerCityName)});
 
-      if (container_city_name === this.state.last) {
+      if (containerCityName === this.state.last) {
         const star = document.querySelector('.star');
         star.classList.remove('favorite');
         star.removeAttribute('disabled');
@@ -667,11 +667,11 @@ class Storage {
       e.stopPropagation();
     })
 
-    container.appendChild(unstar_button);
+    container.appendChild(unstarButton);
   }
 
-  isInDropdown(city_name, dropdown) {
-    return this.state[dropdown].includes(city_name);
+  isInDropdown(cityName, dropdown) {
+    return this.state[dropdown].includes(cityName);
   }
 
 }

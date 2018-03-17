@@ -20,7 +20,7 @@ export default class Forecast {
   showForecast() {
     let forecast = '';
     this.state.forecast.forEach(dayWeather => forecast += this.addDayWeather(dayWeather));
-    elements.forecast_wrapper.innerHTML = forecast;
+    elements.forecastWrapper.innerHTML = forecast;
   }
 
   addDayWeather(dayWeather) {

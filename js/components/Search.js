@@ -9,19 +9,19 @@ export default class Search {
       API_URL: 'https://maps.googleapis.com/maps/api/geocode/json',
       API_KEY: 'AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A'
     }
-    this.autocomplete = new google.maps.places.Autocomplete(elements.search_input, {types: ['(cities)']});
+    this.autocomplete = new google.maps.places.Autocomplete(elements.searchInput, {types: ['(cities)']});
 
     this.getPlaceFromAutocomplete = this.getPlaceFromAutocomplete.bind(this);
 
     this.autocomplete.addListener('place_changed', this.getPlaceFromAutocomplete);
-    elements.search_button.addEventListener('click', () => {
-      this.findLocationByCityName(elements.search_input.value.trim());
+    elements.searchButton.addEventListener('click', () => {
+      this.findLocationByCityName(elements.searchInput.value.trim());
     });
   }
 
   update(nextProps) {
     this.props = Object.assign({}, this.props, nextProps);
-    this.findLocationByCityName(this.props.city_name);
+    this.findLocationByCityName(this.props.cityName);
   }
 
   updateState(nextState) {
@@ -40,9 +40,9 @@ export default class Search {
     }
   }
 
-  findLocationByCityName(city_name) {
-    if (city_name) {
-      const url = `${this.request.API_URL}?address=${city_name}&key=${this.request.API_KEY}`;
+  findLocationByCityName(cityName) {
+    if (cityName) {
+      const url = `${this.request.API_URL}?address=${cityName}&key=${this.request.API_KEY}`;
 
       fetch(url)
         .then(response => {

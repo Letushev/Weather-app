@@ -8,16 +8,16 @@ export default class Degree {
       degree: 'M'
     }
 
-    elements.celsius_button.classList.add('active');
+    elements.celsiusButton.classList.add('active');
 
-    elements.celsius_button.addEventListener('click', e => {
+    elements.celsiusButton.addEventListener('click', e => {
       if (!e.target.classList.contains('active')) {
         this.updateState({degree: 'M'});
         this.props.onDegreeChange('M', this.convertToC);
       }
     });
 
-    elements.fahrenheit_button.addEventListener('click', e => {
+    elements.fahrenheitButton.addEventListener('click', e => {
       if (!e.target.classList.contains('active')) {
         this.updateState({degree: 'I'});
         this.props.onDegreeChange('I', this.convertToF);
@@ -36,11 +36,11 @@ export default class Degree {
   }
 
   changeActiveButton(degree) {
-    const target_button = degree === 'M' ? elements.celsius_button : elements.fahrenheit_button;
+    const targetButton = degree === 'M' ? elements.celsiusButton : elements.fahrenheitButton;
 
-    if (!target_button.classList.contains('active')) {
-      const sibling = target_button.nextElementSibling || target_button.previousElementSibling;
-      target_button.classList.add('active');
+    if (!targetButton.classList.contains('active')) {
+      const sibling = targetButton.nextElementSibling || targetButton.previousElementSibling;
+      targetButton.classList.add('active');
       sibling.classList.remove('active');
     }
   }

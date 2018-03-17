@@ -19,7 +19,7 @@ export default class Current {
   }
 
   showCurrentWeather() {
-    elements.current_wrapper.innerHTML =
+    elements.currentWrapper.innerHTML =
      `<section>
         <h1>${this.state.current.city_name}<span class="country">${this.state.current.country}</span></h1>
         <div class="current-main-values">
@@ -76,7 +76,7 @@ export default class Current {
 
     star.addEventListener('click', () => this.props.onStar(this.state.current.city_name));
 
-    elements.current_wrapper.appendChild(star);
+    elements.currentWrapper.appendChild(star);
   }
 
 }
