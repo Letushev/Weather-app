@@ -1,67 +1,81 @@
-import { elements } from './../utils/elements';
+import Component from './../framework/Component';
 
-export default class Search {
+import { elements } from './../utils/elements';
+import { getPlaceInfo } from './../utils/api';
+import { bindAll } from './../utils/helpers';
+
+export default class Search extends Component {
 
   constructor(props) {
-    this.props = props;
-    this.state = null;
-    this.request = {
-      API_URL: 'https://maps.googleapis.com/maps/api/geocode/json',
-      API_KEY: 'AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A'
-    }
-    this.autocomplete = new google.maps.places.Autocomplete(elements.searchInput, {types: ['(cities)']});
+    super(props);
 
-    this.getPlaceFromAutocomplete = this.getPlaceFromAutocomplete.bind(this);
+    this.state = {
+      isValid: true
+    };
 
-    this.autocomplete.addListener('place_changed', this.getPlaceFromAutocomplete);
-    elements.searchButton.addEventListener('click', () => {
-      this.findLocationByCityName(elements.searchInput.value.trim());
+    bindAll(
+      this,
+      'handleAutocompleteSearch',
+      'handleButtonSearch'
+    );
+
+    this.autocomplete = new google.maps.places.Autocomplete(elements.searchInput, {
+      types: ['(cities)'],
     });
+    this.autocomplete.addListener('place_changed', this.handleAutocompleteSearch);
+
+    elements.searchButton.addEventListener('click', this.handleButtonSearch);
   }
 
-  update(nextProps) {
-    this.props = Object.assign({}, this.props, nextProps);
-    this.findLocationByCityName(this.props.cityName);
+  update(props) {
+    super.update(props);
+    this.findPlaceInfoByCityName(this.props.cityName);
   }
 
-  updateState(nextState) {
-    this.state = Object.assign({}, this.state, nextState);
-    this.props.onSearch(this.state);
+  render() {
+    const { isValid } = this.state;
+    if (!isValid) {
+      elements.searchInput.placeholder = 'Wrong city name. Please try again...';
+    }
   }
 
-  getPlaceFromAutocomplete() {
+  isValidCityName(name) {
+    return !!name && !/\d/.test(name);
+  }
+
+  handleAutocompleteSearch() {
     const place = this.autocomplete.getPlace();
     /* When enter is pressed, the 'place_changed' event fires
        The result of getPlace() is object like { name: 'input text' } */
     if (Object.keys(place).length === 1) { // enter pressed -> search in Google geocode api
-      this.findLocationByCityName(place.name.trim());
-    } else {                               // chosen from autocomplete list -> get location immediately
+      this.findPlaceInfoByCityName(place.name.trim());
+    } else { // chosen from autocomplete list -> get location immediately
       this.getLocation(place);
     }
   }
 
-  findLocationByCityName(cityName) {
-    if (cityName) {
-      const url = `${this.request.API_URL}?address=${cityName}&key=${this.request.API_KEY}`;
+  handleButtonSearch() {
+    this.findPlaceInfoByCityName(elements.searchInput.value.trim());
+  }
 
-      fetch(url)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then(data => this.getLocation(data.results[0]));
-        // .catch(() => alert('Wrong city. Please, try again...'));
+  findPlaceInfoByCityName(cityName) {
+    if (this.isValidCityName(cityName)) {
+      getPlaceInfo(cityName)
+        .then(placeInfo => this.getLocation(placeInfo.results[0], cityName));
+    } else {
+      this.updateState({isValid: false});
     }
   }
 
-  getLocation(info) {
-    let lat = info.geometry.location.lat,
-        lng = info.geometry.location.lng;
+  getLocation(placeInfo, foundCityName) {
+    let lat = placeInfo.geometry.location.lat,
+        lng = placeInfo.geometry.location.lng,
+        cityName = foundCityName || placeInfo.formatted_address.split(',')[0];
+
     lat = typeof(lat) === 'function' ? lat() : lat;
     lng = typeof(lng) === 'function' ? lng() : lng;
 
-    this.updateState({lat, lng});
+    this.props.onLocationIsFound({cityName, lat, lng});
   }
 
 }

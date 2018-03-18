@@ -44,7 +44,7 @@ body, button {
   font-family: 'Bubbler One', sans-serif;
   letter-spacing: 2px; }
 
-.dropdown .dropdown-content, header .search-wrapper #search-input {
+.dropdown .dropdown-content, header .search-wrapper .search-input {
   font-family: Helvetica;
   letter-spacing: 2px; }
 
@@ -124,21 +124,21 @@ header {
   header .search-wrapper {
     display: flex;
     margin: 0 40px; }
-    header .search-wrapper #search-input {
+    header .search-wrapper .search-input {
       flex: 1 1 auto;
       padding: 10px 15px;
       color: #172a2e;
       border: 1px solid #42A5F5; }
-      header .search-wrapper #search-input::placeholder {
+      header .search-wrapper .search-input::placeholder {
         color: #42A5F5;
         letter-spacing: 5px; }
-    header .search-wrapper #search-button {
+    header .search-wrapper .search-button {
       width: 100px;
       padding: 10px 0;
       margin-left: 15px;
       color: #fff;
       background: #1565C0; }
-      header .search-wrapper #search-button:hover {
+      header .search-wrapper .search-button:hover {
         background: #0D47A1; }
 
 main {

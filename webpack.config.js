@@ -2,7 +2,7 @@ module.exports = (env = {}) => {
   return {
     entry: ['./js/components/App.js', './scss/main.scss'],
     output: {
-      filename: 'js/index.js',
+      filename: 'js/bundle.js',
     },
     module: {
       rules: [
