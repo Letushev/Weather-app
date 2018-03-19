@@ -336,7 +336,8 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* defa
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_6__utils_api__["a" /* getWeatherInfo */])(location, degree)
       .then(weatherInfo => this.computeNextState(location, weatherInfo))
       .then(this.updateState)
-      .then(this.addToHistoryStack);
+      .then(this.addToHistoryStack)
+      .catch(() => alert('Server error...'));
   }
 
   computeNextState(nextLocation, [nextCurrent, nextForecast]) {

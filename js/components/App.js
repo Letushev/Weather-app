@@ -69,7 +69,8 @@ export default class App extends Component {
     getWeatherInfo(location, degree)
       .then(weatherInfo => this.computeNextState(location, weatherInfo))
       .then(this.updateState)
-      .then(this.addToHistoryStack);
+      .then(this.addToHistoryStack)
+      .catch(() => alert('Server error...'));
   }
 
   computeNextState(nextLocation, [nextCurrent, nextForecast]) {
