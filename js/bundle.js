@@ -221,8 +221,7 @@ const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const GOOGLE_API_KEY = 'AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A';
 
 const get = (apiUrl, query, apiKey) => {
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  return  fetch(proxyUrl + `${apiUrl}${query}&key=${apiKey}`)
+  return  fetch(`${apiUrl}${query}&key=${apiKey}`)
             .then(response => {
               if (response.ok) {
                 return response.json();
@@ -301,11 +300,11 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* defa
       'addToHistoryStack'
     );
 
-    this.search = new __WEBPACK_IMPORTED_MODULE_3__Search__["a" /* default */]({onLocationIsFound: this.onLocationIsFound});
-    this.current = new __WEBPACK_IMPORTED_MODULE_1__Current__["a" /* default */]();
-    this.forecast = new __WEBPACK_IMPORTED_MODULE_2__Forecast__["a" /* default */]();
-    this.storage = new __WEBPACK_IMPORTED_MODULE_4__Storage__["a" /* default */]({onDropdownItemClick: this.onDropdownItemClick});
-    this.degree = new __WEBPACK_IMPORTED_MODULE_5__Degree__["a" /* default */]({onDegreeChange: this.onDegreeChange});
+    this._search = new __WEBPACK_IMPORTED_MODULE_3__Search__["a" /* default */]({onLocationIsFound: this.onLocationIsFound});
+    this._current = new __WEBPACK_IMPORTED_MODULE_1__Current__["a" /* default */]();
+    this._forecast = new __WEBPACK_IMPORTED_MODULE_2__Forecast__["a" /* default */]();
+    this._storage = new __WEBPACK_IMPORTED_MODULE_4__Storage__["a" /* default */]({onDropdownItemClick: this.onDropdownItemClick});
+    this._degree = new __WEBPACK_IMPORTED_MODULE_5__Degree__["a" /* default */]({onDegreeChange: this.onDegreeChange});
 
     this.init();
 
@@ -318,19 +317,19 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* defa
     const initialCityName = 'Kiev';
 
     if (this.state.location.cityName) { // smth present in url ?= -> search it
-      this.search.update({cityName: this.state.location.cityName});
+      this._search.update({cityName: this.state.location.cityName});
     } else {
       if (JSON.parse(localStorage.getItem('last'))) { // history is not empty -> search by last location
         this.onLocationIsFound(JSON.parse(localStorage.getItem('last')));
       } else { // history is empty -> search by INITIAL
-        this.search.update({cityName: initialCityName});
+        this._search.update({cityName: initialCityName});
       }
     }
   }
 
   onLocationIsFound(location) {
     this.getWeather(location);
-    this.storage.update({locationForHistory: location});
+    this._storage.update({locationForHistory: location});
   }
 
   getWeather(location, degree = 'M') {
@@ -350,13 +349,13 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* defa
   }
 
   render() {
-    this.current.update({
+    this._current.update({
       cityName: this.state.location.cityName,
       current: this.state.current,
       onMakeFavorite: this.onMakeFavorite
     });
 
-    this.forecast.update({
+    this._forecast.update({
       forecast: this.state.forecast
     });
 
@@ -364,7 +363,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0__framework_Component__["a" /* defa
   }
 
   onMakeFavorite(cityName) {
-    this.storage.update({favorite: cityName});
+    this._storage.update({favorite: cityName});
   }
 
   onDropdownItemClick(location) {

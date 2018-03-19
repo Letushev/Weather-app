@@ -5,8 +5,7 @@ const GOOGLE_API_URL = 'https://maps.googleapis.com/maps/api/geocode/json';
 const GOOGLE_API_KEY = 'AIzaSyCWt-oX6XfeWXSXMS2dCj5_tmbmOf6-D9A';
 
 const get = (apiUrl, query, apiKey) => {
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  return  fetch(proxyUrl + `${apiUrl}${query}&key=${apiKey}`)
+  return  fetch(`${apiUrl}${query}&key=${apiKey}`)
             .then(response => {
               if (response.ok) {
                 return response.json();

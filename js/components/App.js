@@ -33,11 +33,11 @@ export default class App extends Component {
       'addToHistoryStack'
     );
 
-    this.search = new Search({onLocationIsFound: this.onLocationIsFound});
-    this.current = new Current();
-    this.forecast = new Forecast();
-    this.storage = new Storage({onDropdownItemClick: this.onDropdownItemClick});
-    this.degree = new Degree({onDegreeChange: this.onDegreeChange});
+    this._search = new Search({onLocationIsFound: this.onLocationIsFound});
+    this._current = new Current();
+    this._forecast = new Forecast();
+    this._storage = new Storage({onDropdownItemClick: this.onDropdownItemClick});
+    this._degree = new Degree({onDegreeChange: this.onDegreeChange});
 
     this.init();
 
@@ -50,19 +50,19 @@ export default class App extends Component {
     const initialCityName = 'Kiev';
 
     if (this.state.location.cityName) { // smth present in url ?= -> search it
-      this.search.update({cityName: this.state.location.cityName});
+      this._search.update({cityName: this.state.location.cityName});
     } else {
       if (JSON.parse(localStorage.getItem('last'))) { // history is not empty -> search by last location
         this.onLocationIsFound(JSON.parse(localStorage.getItem('last')));
       } else { // history is empty -> search by INITIAL
-        this.search.update({cityName: initialCityName});
+        this._search.update({cityName: initialCityName});
       }
     }
   }
 
   onLocationIsFound(location) {
     this.getWeather(location);
-    this.storage.update({locationForHistory: location});
+    this._storage.update({locationForHistory: location});
   }
 
   getWeather(location, degree = 'M') {
@@ -82,13 +82,13 @@ export default class App extends Component {
   }
 
   render() {
-    this.current.update({
+    this._current.update({
       cityName: this.state.location.cityName,
       current: this.state.current,
       onMakeFavorite: this.onMakeFavorite
     });
 
-    this.forecast.update({
+    this._forecast.update({
       forecast: this.state.forecast
     });
 
@@ -96,7 +96,7 @@ export default class App extends Component {
   }
 
   onMakeFavorite(cityName) {
-    this.storage.update({favorite: cityName});
+    this._storage.update({favorite: cityName});
   }
 
   onDropdownItemClick(location) {
