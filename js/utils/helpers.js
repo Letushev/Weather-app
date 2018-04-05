@@ -48,6 +48,7 @@ export const editCurrentValues = current => {
   current.country = getCountryName(current.country_code);
   current.temp = Math.round(current.temp);
   current.app_temp = Math.round(current.app_temp);
+  current.wind_spd = Math.round(current.wind_spd);
   current.weather.icon = getSkyconClass(current.weather.code, current.weather.icon);
   current.pres = Math.round(current.pres);
 
@@ -58,6 +59,7 @@ export const editForecastValues = forecast => {
   forecast = forecast.map(day => {
     day.day = getWeekDay(day.datetime);
     day.datetime = renderDate(day.datetime);
+    day.wind_spd = Math.round(day.wind_spd);
     day.max_temp = Math.round(day.max_temp);
     day.min_temp = Math.round(day.min_temp);
     day.weather.icon = getSkyconClass(day.weather.code, day.weather.icon);
